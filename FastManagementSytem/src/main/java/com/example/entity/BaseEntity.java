@@ -17,7 +17,8 @@ import java.util.UUID;
 @MappedSuperclass
 @Getter
 @Setter
-
+@AllArgsConstructor
+@NoArgsConstructor
 public  abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
