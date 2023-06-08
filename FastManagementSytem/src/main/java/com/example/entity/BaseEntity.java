@@ -2,7 +2,9 @@ package com.example.entity;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,7 +15,8 @@ import java.util.UUID;
 @MappedSuperclass
 @Getter
 @Setter
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseEntity {
     @Id
     protected UUID id;
