@@ -19,7 +19,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseEntity {
+public  abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected UUID id;
