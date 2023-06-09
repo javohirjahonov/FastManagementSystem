@@ -7,5 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
-    Optional<UserEntity> findUserEntityByPhoneNumber(String phoneNumber);
+    Optional<UserEntity> findUserEntitiesByPhoneNumber(String phoneNumber);
+
+    Optional<UserEntity> findUserEntitiesById(UUID userId);
 }
