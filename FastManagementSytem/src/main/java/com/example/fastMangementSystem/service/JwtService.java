@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,8 @@ public class JwtService {
     public String generateAccessToken(UserEntity userEntity) {
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, secretKey)
-                .setSubject(userEntity.getEmail())
+                .setSubject(userEntity.getUsername()
+                )
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + accessTokenExpiry))
                 .addClaims(Map.of("roles", getRoles(userEntity.getAuthorities())))

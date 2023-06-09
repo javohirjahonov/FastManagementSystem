@@ -1,4 +1,4 @@
-package com.example.fastMangementSystem.fastmanagementsytem;
+package com.example.fastMangementSystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
