@@ -1,9 +1,8 @@
 package com.example.fastMangementSystem.entity.user;
 
 import com.example.fastMangementSystem.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.example.fastMangementSystem.entity.course.CourseEntity;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-//@Getter
-//@Setter
+@Entity(name = "users")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -27,6 +26,8 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private List<UserRole> roles;
+    @OneToMany
+    private List<CourseEntity> courses;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
