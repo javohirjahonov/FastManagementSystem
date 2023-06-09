@@ -1,4 +1,4 @@
-package com.example.fastMangementSystem.service;
+package com.example.fastMangementSystem.service.jwt;
 
 import com.example.fastMangementSystem.entity.user.UserEntity;
 import io.jsonwebtoken.Claims;

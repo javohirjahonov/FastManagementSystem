@@ -1,7 +1,7 @@
 package com.example.fastMangementSystem.filter;
 
-import com.example.fastMangementSystem.service.AuthenticationService;
-import com.example.fastMangementSystem.service.JwtService;
+import com.example.fastMangementSystem.service.auth.AuthenticationService;
+import com.example.fastMangementSystem.service.jwt.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import jakarta.servlet.FilterChain;
