@@ -1,4 +1,4 @@
-package com.example.fastMangementSystem.service;
+package com.example.fastMangementSystem.service.auth;
 
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;

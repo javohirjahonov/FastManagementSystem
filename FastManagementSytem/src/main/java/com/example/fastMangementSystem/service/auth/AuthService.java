@@ -1,4 +1,4 @@
-package com.example.fastMangementSystem.service;
+package com.example.fastMangementSystem.service.auth;
 
 import com.example.fastMangementSystem.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
