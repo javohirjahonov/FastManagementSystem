@@ -2,9 +2,11 @@ package com.example.fastMangementSystem.entity.module;
 
 import com.example.fastMangementSystem.entity.BaseEntity;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
+import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.util.List;
@@ -21,4 +23,7 @@ public class ModuleEntity extends BaseEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private CourseEntity course;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<LessonEntity> lessonEntities;
 }
