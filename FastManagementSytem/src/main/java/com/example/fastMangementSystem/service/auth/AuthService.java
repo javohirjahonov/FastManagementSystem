@@ -13,8 +13,8 @@ public class AuthService implements UserDetailsService {
 
     private final UserRepository userRepository;
     @Override
-    public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
-        return userRepository.findUserEntityByPhoneNumber(phoneNumber)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findUserEntityByEmail(email)
                 .orElseThrow(() -> new NullPointerException("user not found")
                 );
     }
