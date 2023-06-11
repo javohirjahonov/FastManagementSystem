@@ -12,5 +12,5 @@ public interface CourseRepository extends JpaRepository<CourseEntity, UUID> {
     Optional<CourseEntity> getCourseEntityByCourseType(UUID id);
 
 
-    List<CourseEntity> findCourseEntitiesByUserListId(Pageable pageable, UUID userId);
+    List<CourseEntity> findCourseEntitiesByUserEntityId(Pageable pageable, UUID userId);
 }
