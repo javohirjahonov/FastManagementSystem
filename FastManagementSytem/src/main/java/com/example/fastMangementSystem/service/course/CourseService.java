@@ -62,7 +62,7 @@ public class CourseService {
 
     public List<CourseEntity> getUserCourse(int page, int size, UUID userId) {
         Pageable pageable = PageRequest.of(page, size);
-        return courseRepository.findCourseEntitiesByUserListId(pageable, userId);
+        return courseRepository.findCourseEntitiesByUserEntityId(pageable, userId);
     }
 
 

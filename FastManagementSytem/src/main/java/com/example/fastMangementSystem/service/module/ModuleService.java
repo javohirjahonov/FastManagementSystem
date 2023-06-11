@@ -51,7 +51,7 @@ public class ModuleService  {
 
     public List<ModuleEntity> getUserModule(int page, int size, UUID userId) {
         Pageable pageable = PageRequest.of(page, size);
-        return moduleRepository.findModuleEntitiesByUserListId(pageable, userId);
+        return moduleRepository.findModuleEntitiesByUserEntityId(pageable, userId);
     }
 
 }
