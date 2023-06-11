@@ -1,17 +1,17 @@
 package com.example.fastMangementSystem.service;
 
 import com.example.fastMangementSystem.dto.LoginDto;
-import com.example.fastMangementSystem.dto.UserCreatedDto;
+import com.example.fastMangementSystem.dto.UserCreateDto;
 import com.example.fastMangementSystem.dto.response.JwtResponse;
 import com.example.fastMangementSystem.entity.user.UserEntity;
 import com.example.fastMangementSystem.entity.user.UserRole;
 import com.example.fastMangementSystem.exception.DataNotFoundException;
 import com.example.fastMangementSystem.repository.user.UserRepository;
+import com.example.fastMangementSystem.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +23,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public UserEntity save(UserCreatedDto userDto, List<UserRole> roles) {
+    public UserEntity save(UserCreateDto userDto, List<UserRole> roles) {
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         userEntity.setRoles(roles);
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));

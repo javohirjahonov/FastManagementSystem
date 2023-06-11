@@ -1,21 +1,18 @@
 package com.example.fastMangementSystem.controller;
 
 import com.example.fastMangementSystem.dto.LoginDto;
-import com.example.fastMangementSystem.dto.UserCreatedDto;
+import com.example.fastMangementSystem.dto.UserCreateDto;
 import com.example.fastMangementSystem.dto.response.JwtResponse;
 import com.example.fastMangementSystem.entity.user.UserEntity;
 import com.example.fastMangementSystem.entity.user.UserRole;
 import com.example.fastMangementSystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
@@ -28,26 +25,26 @@ public class AuthController {
     }
     @PostMapping("/admin/sign-up")
     public ResponseEntity<UserEntity> adminSignUp(
-            @RequestBody UserCreatedDto userDto
+            @RequestBody UserCreateDto userDto
     ) {
         return ResponseEntity.ok(userService.save(userDto, List.of(UserRole.ADMIN)));
     }
 
     @PostMapping("/client/sign-up")
     public ResponseEntity<UserEntity> userSignUp(
-            @RequestBody UserCreatedDto userDto
+            @RequestBody UserCreateDto userDto
     ) {
         return ResponseEntity.ok(userService.save(userDto, List.of(UserRole.CLIENT)));
     }
     @PostMapping("/mentor/sign-up")
     public ResponseEntity<UserEntity> mentorSignUp(
-            @RequestBody UserCreatedDto userDto
+            @RequestBody UserCreateDto userDto
     ) {
         return ResponseEntity.ok(userService.save(userDto, List.of(UserRole.MENTOR)));
     }
     @PostMapping("/operator/sign-up")
     public ResponseEntity<UserEntity> operatorSignUp(
-            @RequestBody UserCreatedDto userDto
+            @RequestBody UserCreateDto userDto
     ) {
         return ResponseEntity.ok(userService.save(userDto, List.of(UserRole.OPERATOR)));
     }

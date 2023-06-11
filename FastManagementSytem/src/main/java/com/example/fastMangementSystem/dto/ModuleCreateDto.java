@@ -1,5 +1,6 @@
 package com.example.fastMangementSystem.dto;
 
+import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import lombok.*;
 
@@ -12,8 +13,6 @@ import java.util.List;
 @Builder
 public class ModuleCreateDto {
     private String  moduleName;
-
-
-    private List<LessonEntity> course;
+    private List<CourseEntity> courses;
 
 }

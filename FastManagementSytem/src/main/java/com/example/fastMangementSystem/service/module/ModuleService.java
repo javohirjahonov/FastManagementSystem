@@ -1,12 +1,17 @@
 package com.example.fastMangementSystem.service.module;
 
 import com.example.fastMangementSystem.dto.ModuleCreateDto;
+import com.example.fastMangementSystem.dto.course.CourseCreatedDto;
+import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import com.example.fastMangementSystem.entity.module.ModuleEntity;
+import com.example.fastMangementSystem.exception.DataNotFoundException;
 import com.example.fastMangementSystem.repository.module.ModuleRepository;
 import com.example.fastMangementSystem.service.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +31,17 @@ public class ModuleService  {
     }
 
 
-    public ModuleEntity update(ModuleEntity moduleEntity) {
-       return moduleRepository.save(moduleEntity);
-
+    public ModuleEntity update(ModuleCreateDto update, UUID id) {
+        ModuleEntity moduleEntity = (moduleRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("course not found")));
+        if (!update.getModuleName().isEmpty()){
+            moduleEntity.setModuleName(update.getModuleName());
+        }
+        if (!update.getCourses().isEmpty()){
+            moduleEntity.setCourse((CourseEntity) update.getCourses());
+        }
+//        CourseEntity map = modelMapper.map(update, CourseEntity.class);
+        return moduleRepository.save(moduleEntity);
     }
 
 
@@ -36,5 +49,9 @@ public class ModuleService  {
    moduleRepository.deleteById(id);
     }
 
+    public List<ModuleEntity> getUserModule(int page, int size, UUID userId) {
+        Pageable pageable = PageRequest.of(page, size);
+        return moduleRepository.findModuleEntitiesByUserListId(pageable, userId);
+    }
 
 }
