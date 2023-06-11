@@ -1,9 +1,9 @@
 package com.example.fastMangementSystem.config;
 
 import com.example.fastMangementSystem.filter.JwtTokenFilter;
-import com.example.fastMangementSystem.service.AuthService;
-import com.example.fastMangementSystem.service.AuthenticationService;
-import com.example.fastMangementSystem.service.JwtService;
+import com.example.fastMangementSystem.service.auth.AuthService;
+import com.example.fastMangementSystem.service.auth.AuthenticationService;
+import com.example.fastMangementSystem.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -23,5 +23,5 @@ public class LessonEntity extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private ModuleEntity module;
     @ManyToOne(cascade = CascadeType.ALL)
-    private UserEntity user;
+    private UserEntity userEntity;
 }
