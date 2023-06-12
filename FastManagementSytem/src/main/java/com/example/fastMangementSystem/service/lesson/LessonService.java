@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class LessonService {
@@ -39,25 +40,17 @@ public class LessonService {
     }
 
 
-
-
     public void delete(UUID id) {
-     courseRepository.deleteById(id);
+        courseRepository.deleteById(id);
     }
 
 
-
     public LessonEntity update(LessonCreateDto lessonCreateDto, UUID lessonId) {
-        Optional<LessonEntity> lessonEntity1 = lessonRepository.findById(lessonId);
-        if (lessonEntity1.isPresent()) {
+        LessonEntity lessonEntity = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new DataNotFoundException("Lesson not found"));
 
-            LessonEntity lessonEntity = modelMapper.map(lessonCreateDto, LessonEntity.class);
-
-            return lessonRepository.save(lessonEntity);
-        } else {
-
-            throw new DataNotFoundException("Lesson not found");
-        }
+        modelMapper.map(lessonCreateDto, lessonEntity);
+        return lessonRepository.save(lessonEntity);
     }
 
     public List<LessonEntity> getAll(int size, int page, UUID userId) {

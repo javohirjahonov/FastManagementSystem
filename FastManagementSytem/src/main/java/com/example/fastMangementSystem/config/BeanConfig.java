@@ -1,5 +1,7 @@
 package com.example.fastMangementSystem.config;
 
+import org.hibernate.metamodel.model.convert.spi.Converters;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class BeanConfig {
     @Bean
     public ModelMapper modelMapper() {
+        modelMapper().getConfiguration().setPropertyCondition(Conditions.isNull());
         return new ModelMapper();
     }
 
