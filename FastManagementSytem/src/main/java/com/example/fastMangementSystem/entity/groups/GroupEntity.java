@@ -1,30 +1,28 @@
-package com.example.fastMangementSystem.entity.module;
+package com.example.fastMangementSystem.entity.groups;
 
 import com.example.fastMangementSystem.entity.BaseEntity;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
-import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import com.example.fastMangementSystem.entity.user.UserEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 
-import java.util.List;
-
-@Entity(name = "modules")
+@Entity(name = "groups")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ModuleEntity extends BaseEntity {
+public class GroupEntity extends BaseEntity {
+    private String name;
+    private String mentor;
+    private String studentsAmount;
 
-    private String  moduleName;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private UserEntity mentorEntity;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private CourseEntity course;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<LessonEntity> lessonEntities;
 }

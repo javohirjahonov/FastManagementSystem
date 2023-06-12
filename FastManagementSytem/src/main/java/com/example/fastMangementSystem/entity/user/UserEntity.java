@@ -2,6 +2,7 @@ package com.example.fastMangementSystem.entity.user;
 
 import com.example.fastMangementSystem.entity.BaseEntity;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
+import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,14 +21,17 @@ import java.util.List;
 public class UserEntity extends BaseEntity implements UserDetails {
     private String name;
     @Column(unique = true, nullable = false)
-    private String email;
-    @Column(unique = true, nullable = false)
     private String phoneNumber;
     private String password;
+
     @Enumerated(EnumType.STRING)
     private List<UserRole> roles;
-    @OneToMany
-    private List<CourseEntity> courses;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<CourseEntity> studentCourses;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<GroupEntity> mentorCourses;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
