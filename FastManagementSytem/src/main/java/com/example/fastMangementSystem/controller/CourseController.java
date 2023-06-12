@@ -2,9 +2,12 @@ package com.example.fastMangementSystem.controller;
 
 import com.example.fastMangementSystem.dto.course.CourseCreatedDto;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
+import com.example.fastMangementSystem.exception.RequestValidationException;
 import com.example.fastMangementSystem.service.course.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,13 @@ public class CourseController {
     @PostMapping("/add")
     public ResponseEntity<CourseEntity> add(
             @RequestBody CourseCreatedDto courseCreatedDto,
-            @RequestParam UUID userId
+            @RequestParam UUID userId,
+            BindingResult bindingResult
             ){
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            throw new RequestValidationException(allErrors);
+        }
         return ResponseEntity.ok(courseService.add(courseCreatedDto,userId));
     }
 
