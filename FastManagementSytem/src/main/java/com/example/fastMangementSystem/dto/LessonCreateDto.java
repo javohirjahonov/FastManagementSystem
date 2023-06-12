@@ -12,8 +12,16 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class LessonCreateDto {
+
+    @NotEmpty(message = "Lesson Name not be null")
     private String name;
+
+    @NotEmpty(message = "Lesson Price not be null")
     private double price;
+
+    @NotEmpty(message = "Lesson lessonDuration not be null")
     private String lessonDuration;
+
+    @NotEmpty(message = "Lesson mentorName not be null")
     private String mentorName;
 }
