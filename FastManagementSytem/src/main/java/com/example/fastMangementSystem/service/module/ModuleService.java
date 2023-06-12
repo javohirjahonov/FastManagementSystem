@@ -32,15 +32,10 @@ public class ModuleService  {
 
 
     public ModuleEntity update(ModuleCreateDto update, UUID id) {
-        ModuleEntity moduleEntity = (moduleRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("course not found")));
-        if (!update.getModuleName().isEmpty()){
-            moduleEntity.setModuleName(update.getModuleName());
-        }
-        if (!update.getCourses().isEmpty()){
-            moduleEntity.setCourse((CourseEntity) update.getCourses());
-        }
-//        CourseEntity map = modelMapper.map(update, CourseEntity.class);
+        ModuleEntity moduleEntity = moduleRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("course not found"));
+
+        modelMapper.map(update, moduleEntity);
         return moduleRepository.save(moduleEntity);
     }
 

@@ -44,13 +44,8 @@ public class CourseService {
     public CourseEntity update(CourseCreatedDto update,UUID id) {
         CourseEntity courseEntity = (courseRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("course not found")));
-        if (!update.getModule().isEmpty()){
-            courseEntity.setModule(update.getModule());
-        }
-        if (!update.getName().isEmpty()){
-            courseEntity.setName(update.getName());
-        }
-//        CourseEntity map = modelMapper.map(update, CourseEntity.class);
+
+        modelMapper.map(update, courseEntity);
         return courseRepository.save(courseEntity);
     }
 
