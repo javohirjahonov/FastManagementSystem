@@ -1,6 +1,7 @@
 package com.example.fastMangementSystem.service.group;
 
 import com.example.fastMangementSystem.dto.groups.GroupsDto;
+import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import com.example.fastMangementSystem.entity.user.UserEntity;
 import com.example.fastMangementSystem.exception.DataNotFoundException;
@@ -32,8 +33,12 @@ public class GroupService{
         return groupEntity;
     }
 
-    public GroupEntity update(GroupEntity groupEntity) {
-        return null;
+    public GroupEntity update(GroupsDto groupsDto,UUID groupId) {
+        GroupEntity groupEntity = (groupsRepository.findById(groupId)
+                .orElseThrow(() -> new DataNotFoundException("group not found")));
+
+        modelMapper.map(groupsDto, groupEntity);
+        return groupsRepository.save(groupEntity);
     }
 
     public void delete(UUID id) {
