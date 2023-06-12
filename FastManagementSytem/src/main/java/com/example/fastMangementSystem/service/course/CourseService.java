@@ -3,9 +3,11 @@ package com.example.fastMangementSystem.service.course;
 import com.example.fastMangementSystem.dto.course.CourseCreatedDto;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.course.CourseType;
+import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import com.example.fastMangementSystem.entity.user.UserEntity;
 import com.example.fastMangementSystem.exception.DataNotFoundException;
 import com.example.fastMangementSystem.repository.course.CourseRepository;
+import com.example.fastMangementSystem.repository.groups.GroupsRepository;
 import com.example.fastMangementSystem.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -21,14 +23,15 @@ import java.util.UUID;
 public class CourseService {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private final GroupsRepository groupsRepository;
     private final ModelMapper modelMapper;
 
     public CourseEntity add(CourseCreatedDto courseCreatedDto, UUID userId) {
-        UserEntity user = userRepository.findById(userId)
+        GroupEntity groupEntity = groupsRepository.findById(userId)
                 .orElseThrow(() -> new DataNotFoundException("user not found"));
 
         CourseEntity courseEntity = modelMapper.map(courseCreatedDto, CourseEntity.class);
-        courseEntity.setUserEntity(user);
+        courseEntity.setCourseGroups(List.of(groupEntity));
 
         courseEntity.setCourseType(CourseType.valueOf(String.join("-", courseEntity.getName(), courseEntity.getModule())));
         courseEntity.setCourseType(CourseType.OFFLINE);
