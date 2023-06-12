@@ -5,5 +5,6 @@ public enum UserRole {
     STUDENT,
     MENTOR,
     CLIENT,
-    OPERATOR
+    OPERATOR,
+    SUPER_ADMIN
 }

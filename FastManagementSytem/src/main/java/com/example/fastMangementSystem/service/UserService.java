@@ -31,7 +31,7 @@ public class UserService {
     }
 
     public JwtResponse login(LoginDto login) {
-        UserEntity userEntity = userRepository.findUserEntityByEmail(login.getEmail())
+        UserEntity userEntity = userRepository.findUserEntitiesByPhoneNumber(login.getPhoneNumber())
                 .orElseThrow(
                         () -> new DataNotFoundException("user not found")
                 );
