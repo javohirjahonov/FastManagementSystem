@@ -16,6 +16,4 @@ public class ModuleCreateDto {
     @NotEmpty(message = "ModuleName not be empty")
     private String  moduleName;
 
-    private List<CourseEntity> courses;
-
 }
