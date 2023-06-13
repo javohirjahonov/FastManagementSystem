@@ -17,5 +17,4 @@ public class CourseCreatedDto {
     private String name;
     @NotEmpty(message = "not null")
     private String module;
-    private UUID userId;
 }
