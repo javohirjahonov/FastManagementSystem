@@ -7,6 +7,7 @@ import com.example.fastMangementSystem.entity.user.UserEntity;
 import com.example.fastMangementSystem.entity.user.UserRole;
 import com.example.fastMangementSystem.exception.RequestValidationException;
 import com.example.fastMangementSystem.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -22,7 +23,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public ResponseEntity<JwtResponse> login(
-            @RequestBody LoginDto login,
+            @Valid  @RequestBody LoginDto login,
             BindingResult bindingResult
     ) {
 
@@ -34,7 +35,7 @@ public class AuthController {
     }
     @PostMapping("/admin/sign-up")
     public ResponseEntity<UserEntity> adminSignUp(
-            @RequestBody UserCreateDto userDto,
+            @Valid @RequestBody UserCreateDto userDto,
             BindingResult bindingResult
     ) {
 
@@ -48,7 +49,7 @@ public class AuthController {
 
     @PostMapping("/client/sign-up")
     public ResponseEntity<UserEntity> userSignUp(
-            @RequestBody UserCreateDto userDto,
+            @Valid @RequestBody UserCreateDto userDto,
             BindingResult bindingResult
     ) {
 
@@ -61,7 +62,7 @@ public class AuthController {
     }
     @PostMapping("/mentor/sign-up")
     public ResponseEntity<UserEntity> mentorSignUp(
-            @RequestBody UserCreateDto userDto,
+            @Valid @RequestBody UserCreateDto userDto,
             BindingResult bindingResult
     ) {
 
@@ -74,7 +75,7 @@ public class AuthController {
     }
     @PostMapping("/operator/sign-up")
     public ResponseEntity<UserEntity> operatorSignUp(
-            @RequestBody UserCreateDto userDto,
+            @Valid @RequestBody UserCreateDto userDto,
             BindingResult bindingResult
     ) {
 
