@@ -33,6 +33,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL)
     private List<GroupEntity> mentorCourses;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CourseEntity> adminCourses;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String ROLE="ROLE_";

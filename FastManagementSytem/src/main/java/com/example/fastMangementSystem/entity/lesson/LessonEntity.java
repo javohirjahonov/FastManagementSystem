@@ -19,10 +19,4 @@ public class LessonEntity extends BaseEntity {
     private double price;
     private String mentorName;
     private String lessonDuration;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private ModuleEntity module;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private UserEntity userEntity;
 }

@@ -21,14 +21,16 @@ public class CourseController {
     @PostMapping("/add")
     public ResponseEntity<CourseEntity> add(
             @RequestBody CourseCreatedDto courseCreatedDto,
-            @RequestParam UUID userId,
+            @RequestParam UUID adminId,
+            @RequestParam UUID moduleId,
+            @RequestParam String role,
             BindingResult bindingResult
             ){
         if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             throw new RequestValidationException(allErrors);
         }
-        return ResponseEntity.ok(courseService.add(courseCreatedDto,userId));
+        return ResponseEntity.ok(courseService.add(courseCreatedDto, adminId, moduleId, role));
     }
 
     @DeleteMapping("/delete")
