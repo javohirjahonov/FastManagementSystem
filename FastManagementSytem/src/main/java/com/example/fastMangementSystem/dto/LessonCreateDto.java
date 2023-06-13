@@ -22,6 +22,4 @@ public class LessonCreateDto {
     @NotEmpty(message = "Lesson lessonDuration not be null")
     private String lessonDuration;
 
-    @NotEmpty(message = "Lesson mentorName not be null")
-    private String mentorName;
 }

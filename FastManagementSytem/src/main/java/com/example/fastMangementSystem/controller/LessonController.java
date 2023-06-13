@@ -15,7 +15,10 @@ import java.util.UUID;
 @RequestMapping("/lesson/v1")
 @RequiredArgsConstructor
 public class LessonController {
+
   private final LessonService lessonService;
+
+
     @PostMapping("/add")
     @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<LessonEntity> add(
@@ -23,6 +26,8 @@ public class LessonController {
     ){
         return ResponseEntity.ok(lessonService.add(lessonCreateDto));
     }
+
+
   @DeleteMapping("/delete")
   @PreAuthorize(value = "hasRole('ADMIN')")
   public void delete(
@@ -30,6 +35,8 @@ public class LessonController {
   ){
     lessonService.delete(id);
   }
+
+
 
   @GetMapping("/get-all")
   @PreAuthorize(value = "hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
@@ -41,6 +48,7 @@ public class LessonController {
     return ResponseEntity.ok(lessonService.getAll(size,page,userId));
   }
 
+
   @PatchMapping("/{lessonId}/update")
   @PreAuthorize(value = "hasRole('ADMIN')")
   public ResponseEntity<LessonEntity> updateLesson(
@@ -48,4 +56,6 @@ public class LessonController {
           @PathVariable UUID lessonId) {
     return ResponseEntity.ok(lessonService.update(lessonCreateDto,lessonId));
   }
+
+
 }
