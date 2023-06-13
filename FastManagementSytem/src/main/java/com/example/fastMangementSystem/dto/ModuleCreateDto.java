@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,5 +16,8 @@ import java.util.List;
 public class ModuleCreateDto {
     @NotEmpty(message = "ModuleName not be empty")
     private String  moduleName;
+
+    private UUID lessonId;
+    private UUID courseId;
 
 }
