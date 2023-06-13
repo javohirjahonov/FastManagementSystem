@@ -20,7 +20,7 @@ import java.util.List;
 @Builder
 public class ModuleEntity extends BaseEntity {
 
-    private String  moduleName;
+    private String moduleName;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private CourseEntity course;

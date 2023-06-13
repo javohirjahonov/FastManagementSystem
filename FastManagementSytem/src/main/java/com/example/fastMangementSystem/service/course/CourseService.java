@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,31 +26,45 @@ public class CourseService {
     private final GroupsRepository groupsRepository;
     private final ModelMapper modelMapper;
 
-    public CourseEntity add(CourseCreatedDto courseCreatedDto, UUID adminId, UUID moduleId, String role) {
-        CourseEntity courseEntity = modelMapper.map(courseCreatedDto, CourseEntity.class);
-
-        ModuleEntity module = moduleRepository.findById(moduleId)
-                .orElseThrow(() -> new DataNotFoundException("This module not found"));
-
-        List<ModuleEntity> modules = new ArrayList<>();
-        modules.add(module);
-        courseEntity.setModules(modules);
+    public CourseEntity add(CourseCreatedDto courseCreatedDto, UUID adminId, String role) {
+        CourseEntity course = modelMapper.map(courseCreatedDto, CourseEntity.class);
 
         UserEntity admin = userRepository.findById(adminId)
-                .orElseThrow(() -> new DataNotFoundException("This admin not found"));
+                .orElseThrow(() -> new DataNotFoundException("admin not found"));
+
+        List<ModuleEntity> modules = course.getModules().stream()
+                .map(moduleCreateDto -> modelMapper.map(moduleCreateDto, ModuleEntity.class))
+                .collect(Collectors.toList());
 
         if (Objects.equals(role, "ONLINE")) {
-            courseEntity.setCourseType(CourseType.ONLINE);
+            course.setCourseType(CourseType.ONLINE);
         } else if (Objects.equals(role, "OFFLINE")) {
-            courseEntity.setCourseType(CourseType.OFFLINE);
+            course.setCourseType(CourseType.OFFLINE);
         }
+        course.setAdmin(admin);
+        course.setModules(modules);
 
-        courseEntity.setAdmin(admin);
-        courseRepository.save(courseEntity);
 
-        return courseEntity;
+//        ModuleEntity module = moduleRepository.findById(moduleId)
+//                .orElseThrow(() -> new DataNotFoundException("This module not found"));
+//
+//        UserEntity admin = userRepository.findById(adminId)
+//                .orElseThrow(() -> new DataNotFoundException("This admin not found"));
+//
+//        CourseEntity courseEntity = modelMapper.map(courseCreatedDto, CourseEntity.class);
+//        courseEntity.setModules(Collections.singletonList(module));
+//        courseEntity.setAdmin(admin);
+//
+//        if (Objects.equals(role, "ONLINE")) {
+//            courseEntity.setCourseType(CourseType.ONLINE);
+//        } else if (Objects.equals(role, "OFFLINE")) {
+//            courseEntity.setCourseType(CourseType.OFFLINE);
+//        }
+
+        courseRepository.save(course);
+
+        return course;
     }
-
 
 
     public void deleteById(UUID id) {
@@ -57,7 +72,7 @@ public class CourseService {
 
     }
 
-    public CourseEntity update(CourseCreatedDto update,UUID id) {
+    public CourseEntity update(CourseCreatedDto update, UUID id) {
         CourseEntity courseEntity = (courseRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("course not found")));
 
@@ -74,13 +89,12 @@ public class CourseService {
     public List<CourseEntity> getUserCourse(int page, int size, UUID userId) {
 //        Pageable pageable = PageRequest.of(page, size);
 //        return courseRepository.findCourseEntitiesByUserEntityId(pageable, userId);
-    return null;
+        return null;
     }
 
     public List<CourseEntity> getAllCourses() {
-       return courseRepository.findAll();
+        return courseRepository.findAll();
     }
-
 
 
 }

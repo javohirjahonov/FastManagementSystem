@@ -1,9 +1,9 @@
 package com.example.fastMangementSystem.controller;
 
 import com.example.fastMangementSystem.dto.ModuleCreateDto;
-import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import com.example.fastMangementSystem.entity.module.ModuleEntity;
 import com.example.fastMangementSystem.service.module.ModuleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,15 +15,17 @@ import java.util.UUID;
 @RequestMapping("/module/v1")
 @RequiredArgsConstructor
 public class ModuleController {
+
     private final ModuleService moduleService;
+
     @PostMapping("/add")
     @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<ModuleEntity> add(
-            @RequestBody ModuleCreateDto moduleCreateDto,
             @RequestParam UUID lessonId,
-            @RequestParam UUID courseId
-            ){
-        return ResponseEntity.ok(moduleService.add(moduleCreateDto,courseId, lessonId));
+            @RequestParam UUID courseId,
+            @Valid @RequestBody ModuleCreateDto moduleCreateDto
+    ){
+        return ResponseEntity.ok(moduleService.add(moduleCreateDto, courseId, lessonId));
     }
 
     @DeleteMapping("/delete")
