@@ -28,7 +28,6 @@ public class LessonService {
 
     public LessonEntity add(LessonCreateDto lessonCreateDto) {
         LessonEntity lessonEntity = modelMapper.map(lessonCreateDto, LessonEntity.class);
-        lessonEntity.setLessonDuration(lessonCreateDto.getLessonDuration());
         lessonRepository.save(lessonEntity);
         return lessonEntity;
     }
