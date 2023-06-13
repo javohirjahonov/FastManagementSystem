@@ -26,13 +26,9 @@ public class LessonService {
     private final ModuleRepository moduleRepository;
     private final LessonRepository lessonRepository;
 
-    public LessonEntity add(LessonCreateDto lessonCreateDto, UUID courseId) {
-        ModuleEntity module = moduleRepository.findById(courseId)
-                .orElseThrow(() -> new DataNotFoundException("Course not found"));
-
+    public LessonEntity add(LessonCreateDto lessonCreateDto) {
         LessonEntity lessonEntity = modelMapper.map(lessonCreateDto, LessonEntity.class);
         lessonEntity.setLessonDuration(lessonCreateDto.getLessonDuration());
-        lessonEntity.setModule(module);
         lessonRepository.save(lessonEntity);
         return lessonEntity;
     }

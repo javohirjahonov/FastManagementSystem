@@ -19,10 +19,9 @@ public class LessonController {
     @PostMapping("/add")
     @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<LessonEntity> add(
-            @RequestBody LessonCreateDto lessonCreateDto,
-            @RequestParam UUID courseId
+            @RequestBody LessonCreateDto lessonCreateDto
     ){
-        return ResponseEntity.ok(lessonService.add(lessonCreateDto,courseId));
+        return ResponseEntity.ok(lessonService.add(lessonCreateDto));
     }
   @DeleteMapping("/delete")
   @PreAuthorize(value = "hasRole('ADMIN')")
