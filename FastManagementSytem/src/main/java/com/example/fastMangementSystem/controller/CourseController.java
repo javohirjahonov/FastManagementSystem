@@ -38,7 +38,7 @@ public class CourseController {
          courseService.deleteById(id);
     }
 
-    @GetMapping("/get-all")
+    @GetMapping("/get-user-courses")
     public ResponseEntity<List<CourseEntity>> getAll(
             @RequestParam int size,
             @RequestParam int page,
@@ -54,8 +54,10 @@ public class CourseController {
         return ResponseEntity.ok(courseService.update(courseCreatedDto, courseId));
     }
 
-
-
+    @GetMapping("/get-all")
+    public List<CourseEntity> getAllCourses() {
+        return courseService.getAllCourses();
+    }
 
 
 }

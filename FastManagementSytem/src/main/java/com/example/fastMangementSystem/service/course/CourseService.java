@@ -63,5 +63,9 @@ public class CourseService {
         return courseRepository.findCourseEntitiesByUserEntityId(pageable, userId);
     }
 
+    public List<CourseEntity> getAllCourses() {
+       return courseRepository.findAll();
+    }
+
 
 }
