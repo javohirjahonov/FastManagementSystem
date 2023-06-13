@@ -25,7 +25,6 @@ public class CourseController {
     public ResponseEntity<CourseEntity> add(
             @RequestBody CourseCreatedDto courseCreatedDto,
             @RequestParam UUID adminId,
-            @RequestParam UUID moduleId,
             @RequestParam String role,
             BindingResult bindingResult
             ){
@@ -33,7 +32,7 @@ public class CourseController {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             throw new RequestValidationException(allErrors);
         }
-        return ResponseEntity.ok(courseService.add(courseCreatedDto, adminId, moduleId, role));
+        return ResponseEntity.ok(courseService.add(courseCreatedDto, adminId, role));
     }
 
     @DeleteMapping("/delete")

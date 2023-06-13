@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +31,7 @@ public class ModuleService  {
 
     public ModuleEntity add(ModuleCreateDto moduleCreateDto, UUID courseId, UUID lessonId) {
         ModuleEntity moduleEntity = modelMapper.map(moduleCreateDto, ModuleEntity.class);
+
         CourseEntity courseEntity = courseRepository.findById(courseId)
                 .orElseThrow(() -> new DataNotFoundException("Course not found"));
 
@@ -38,9 +40,10 @@ public class ModuleService  {
         LessonEntity lessonEntity = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new DataNotFoundException("Lesson not found"));
 
-        moduleEntity.getLessonEntities().add(lessonEntity);
+        moduleEntity.setLessonEntities(Collections.singletonList(lessonEntity));
 
-        return moduleRepository.save(moduleEntity);
+        moduleRepository.save(moduleEntity);
+        return moduleEntity;
     }
 
     public List<LessonEntity> findLessonsInModule(UUID moduleId) {

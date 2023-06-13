@@ -17,7 +17,4 @@ public class ModuleCreateDto {
     @NotEmpty(message = "ModuleName not be empty")
     private String  moduleName;
 
-    private UUID lessonId;
-    private UUID courseId;
-
 }
