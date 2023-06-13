@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
@@ -74,8 +74,15 @@ public class AuthController {
     }
     @PostMapping("/operator/sign-up")
     public ResponseEntity<UserEntity> operatorSignUp(
-            @RequestBody UserCreateDto userDto
+            @RequestBody UserCreateDto userDto,
+            BindingResult bindingResult
     ) {
+
+
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            throw new RequestValidationException(allErrors);
+        }
         return ResponseEntity.ok(userService.save(userDto, List.of(UserRole.OPERATOR)));
     }
 
