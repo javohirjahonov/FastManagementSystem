@@ -54,7 +54,8 @@ public class LessonService {
     }
 
     public List<LessonEntity> getAll(int size, int page, UUID userId) {
-        Pageable pageable = PageRequest.of(page, size);
-        return lessonRepository.findLessonEntitiesByUserId(pageable, userId);
+//        Pageable pageable = PageRequest.of(page, size);
+//        return lessonRepository.findLessonEntitiesByUserId(pageable, userId);
+        return null;
     }
 }
