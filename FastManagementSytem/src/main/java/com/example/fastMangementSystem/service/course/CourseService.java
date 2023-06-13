@@ -3,6 +3,7 @@ package com.example.fastMangementSystem.service.course;
 import com.example.fastMangementSystem.dto.course.CourseCreatedDto;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.course.CourseType;
+import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import com.example.fastMangementSystem.entity.module.ModuleEntity;
 import com.example.fastMangementSystem.entity.user.UserEntity;
 import com.example.fastMangementSystem.exception.DataNotFoundException;
@@ -32,17 +33,17 @@ public class CourseService {
         UserEntity admin = userRepository.findById(adminId)
                 .orElseThrow(() -> new DataNotFoundException("admin not found"));
 
-        List<ModuleEntity> modules = course.getModules().stream()
-                .map(moduleCreateDto -> modelMapper.map(moduleCreateDto, ModuleEntity.class))
+        List<GroupEntity> group = course.getGroups().stream()
+                .map(groupCreateDto -> modelMapper.map(groupCreateDto, GroupEntity.class))
                 .collect(Collectors.toList());
-
         if (Objects.equals(role, "ONLINE")) {
             course.setCourseType(CourseType.ONLINE);
         } else if (Objects.equals(role, "OFFLINE")) {
             course.setCourseType(CourseType.OFFLINE);
         }
+
         course.setAdmin(admin);
-        course.setModules(modules);
+        course.setGroups(group);
 
 
 //        ModuleEntity module = moduleRepository.findById(moduleId)
