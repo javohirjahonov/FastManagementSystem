@@ -74,8 +74,15 @@ public class AuthController {
     }
     @PostMapping("/operator/sign-up")
     public ResponseEntity<UserEntity> operatorSignUp(
-            @RequestBody UserCreateDto userDto
+            @RequestBody UserCreateDto userDto,
+            BindingResult bindingResult
     ) {
+
+
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            throw new RequestValidationException(allErrors);
+        }
         return ResponseEntity.ok(userService.save(userDto, List.of(UserRole.OPERATOR)));
     }
 
