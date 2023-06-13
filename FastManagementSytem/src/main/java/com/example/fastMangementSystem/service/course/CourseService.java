@@ -59,8 +59,9 @@ public class CourseService {
     }
 
     public List<CourseEntity> getUserCourse(int page, int size, UUID userId) {
-        Pageable pageable = PageRequest.of(page, size);
-        return courseRepository.findCourseEntitiesByUserEntityId(pageable, userId);
+//        Pageable pageable = PageRequest.of(page, size);
+//        return courseRepository.findCourseEntitiesByUserEntityId(pageable, userId);
+    return null;
     }
 
     public List<CourseEntity> getAllCourses() {
