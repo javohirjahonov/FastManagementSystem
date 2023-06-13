@@ -31,11 +31,9 @@ public class LessonService {
                 .orElseThrow(() -> new DataNotFoundException("Course not found"));
 
         LessonEntity lessonEntity = modelMapper.map(lessonCreateDto, LessonEntity.class);
-        lessonEntity.setName(lessonCreateDto.getName());
-        lessonEntity.setPrice(lessonCreateDto.getPrice());
-        lessonEntity.setMentorName(lessonCreateDto.getMentorName());
         lessonEntity.setLessonDuration(lessonCreateDto.getLessonDuration());
         lessonEntity.setModule(module);
+        lessonRepository.save(lessonEntity);
         return lessonEntity;
     }
 

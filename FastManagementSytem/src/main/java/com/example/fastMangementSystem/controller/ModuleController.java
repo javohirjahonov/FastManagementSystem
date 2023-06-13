@@ -20,9 +20,10 @@ public class ModuleController {
     @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<ModuleEntity> add(
             @RequestBody ModuleCreateDto moduleCreateDto,
-            @RequestBody List<LessonEntity> lessonEntities
+            @RequestParam UUID lessonId,
+            @RequestParam UUID courseId
             ){
-        return ResponseEntity.ok(moduleService.add(moduleCreateDto,lessonEntities));
+        return ResponseEntity.ok(moduleService.add(moduleCreateDto,courseId, lessonId));
     }
 
     @DeleteMapping("/delete")

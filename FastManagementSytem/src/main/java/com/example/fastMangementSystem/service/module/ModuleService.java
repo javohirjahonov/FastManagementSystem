@@ -6,6 +6,8 @@ import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import com.example.fastMangementSystem.entity.module.ModuleEntity;
 import com.example.fastMangementSystem.exception.DataNotFoundException;
+import com.example.fastMangementSystem.repository.course.CourseRepository;
+import com.example.fastMangementSystem.repository.lesson.LessonRepository;
 import com.example.fastMangementSystem.repository.module.ModuleRepository;
 import com.example.fastMangementSystem.service.BaseService;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +23,31 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ModuleService  {
     private final ModuleRepository moduleRepository;
+    private final CourseRepository courseRepository;
+    private final LessonRepository lessonRepository;
     private final ModelMapper modelMapper;
 
 
-    public ModuleEntity add(ModuleCreateDto moduleCreateDto, List<LessonEntity> lessonEntities) {
-        ModuleEntity map = modelMapper.map(moduleCreateDto, ModuleEntity.class);
-        map.setLessonEntities(lessonEntities);
-        return moduleRepository.save(map);
+    public ModuleEntity add(ModuleCreateDto moduleCreateDto, UUID courseId, UUID lessonId) {
+        ModuleEntity moduleEntity = modelMapper.map(moduleCreateDto, ModuleEntity.class);
+        CourseEntity courseEntity = courseRepository.findById(courseId)
+                .orElseThrow(() -> new DataNotFoundException("Course not found"));
+
+        moduleEntity.setCourse(courseEntity);
+
+        LessonEntity lessonEntity = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new DataNotFoundException("Lesson not found"));
+
+        moduleEntity.getLessonEntities().add(lessonEntity);
+
+        return moduleRepository.save(moduleEntity);
+    }
+
+    public List<LessonEntity> findLessonsInModule(UUID moduleId) {
+        ModuleEntity moduleEntity = moduleRepository.findById(moduleId)
+                .orElseThrow(() -> new DataNotFoundException("Module not found"));
+
+        return moduleEntity.getLessonEntities();
     }
 
 

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.Table;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,4 +17,5 @@ public class CourseCreatedDto {
     private String name;
     @NotEmpty(message = "not null")
     private String module;
+    private UUID userId;
 }
