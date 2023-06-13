@@ -2,6 +2,7 @@ package com.example.fastMangementSystem.controller;
 
 import com.example.fastMangementSystem.dto.LessonCreateDto;
 import com.example.fastMangementSystem.dto.groups.GroupsDto;
+import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import com.example.fastMangementSystem.exception.RequestValidationException;
@@ -9,6 +10,7 @@ import com.example.fastMangementSystem.repository.groups.GroupsRepository;
 import com.example.fastMangementSystem.service.group.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.validation.BindingResult;
@@ -27,6 +29,7 @@ public class GroupController {
     private final GroupService groupService;
 
     @PostMapping("/add")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<GroupEntity> addGroup(
             @RequestBody GroupsDto groupsDto,
             @RequestParam UUID mentorId,
@@ -40,16 +43,23 @@ public class GroupController {
     }
 
     @DeleteMapping("/delete")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public void delete(
             @RequestParam UUID id
     ) {
         groupService.delete(id);
     }
     @PatchMapping("/{groupId}/update")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<GroupEntity> updateGroup(
             @RequestBody GroupsDto groupsDto,
             @PathVariable UUID groupId) {
         return ResponseEntity.ok(groupService.update(groupsDto,groupId));
+    }
+    @GetMapping("/get-all")
+    public ResponseEntity<List<GroupEntity>> getAll(
+    ) {
+        return ResponseEntity.ok( groupService.getAll());
     }
 
 }
