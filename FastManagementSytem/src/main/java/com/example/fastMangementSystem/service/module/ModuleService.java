@@ -3,10 +3,12 @@ package com.example.fastMangementSystem.service.module;
 import com.example.fastMangementSystem.dto.ModuleCreateDto;
 import com.example.fastMangementSystem.dto.course.CourseCreatedDto;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
+import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import com.example.fastMangementSystem.entity.module.ModuleEntity;
 import com.example.fastMangementSystem.exception.DataNotFoundException;
 import com.example.fastMangementSystem.repository.course.CourseRepository;
+import com.example.fastMangementSystem.repository.groups.GroupsRepository;
 import com.example.fastMangementSystem.repository.lesson.LessonRepository;
 import com.example.fastMangementSystem.repository.module.ModuleRepository;
 import com.example.fastMangementSystem.service.BaseService;
@@ -26,21 +28,21 @@ public class ModuleService  {
     private final ModuleRepository moduleRepository;
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
+    private final GroupsRepository groupsRepository;
     private final ModelMapper modelMapper;
 
 
-    public ModuleEntity add(ModuleCreateDto moduleCreateDto, UUID courseId, UUID lessonId) {
+    public ModuleEntity add(ModuleCreateDto moduleCreateDto, UUID groupId, UUID lessonId) {
         ModuleEntity moduleEntity = modelMapper.map(moduleCreateDto, ModuleEntity.class);
 
-        CourseEntity courseEntity = courseRepository.findById(courseId)
-                .orElseThrow(() -> new DataNotFoundException("Course not found"));
-
-        moduleEntity.setCourse(courseEntity);
+        GroupEntity groupEntity = groupsRepository.findById(groupId)
+                .orElseThrow(() -> new DataNotFoundException("Group not found"));
 
         LessonEntity lessonEntity = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new DataNotFoundException("Lesson not found"));
 
-        moduleEntity.setLessonEntities(Collections.singletonList(lessonEntity));
+        groupEntity.setModules(List.of(moduleEntity));
+        moduleEntity.setLessonEntities(List.of(lessonEntity));
 
         moduleRepository.save(moduleEntity);
         return moduleEntity;
@@ -64,7 +66,7 @@ public class ModuleService  {
 
 
     public void delete(UUID id) {
-   moduleRepository.deleteById(id);
+        moduleRepository.deleteById(id);
     }
 
     public List<ModuleEntity> getUserModule(int page, int size, UUID userId) {

@@ -33,14 +33,13 @@ public class GroupController {
     public ResponseEntity<GroupEntity> addGroup(
             @RequestBody GroupsDto groupsDto,
             @RequestParam UUID mentorId,
-            @RequestParam UUID courseId,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             throw new RequestValidationException(allErrors);
         }
-        return ResponseEntity.ok(groupService.add(groupsDto, mentorId, courseId));
+        return ResponseEntity.ok(groupService.add(groupsDto, mentorId));
     }
 
     @DeleteMapping("/delete")
