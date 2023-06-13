@@ -2,10 +2,12 @@ package com.example.fastMangementSystem.controller;
 
 import com.example.fastMangementSystem.dto.course.CourseCreatedDto;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
+import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import com.example.fastMangementSystem.exception.RequestValidationException;
 import com.example.fastMangementSystem.service.course.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class CourseController {
     private final CourseService courseService;
     @PostMapping("/add")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<CourseEntity> add(
             @RequestBody CourseCreatedDto courseCreatedDto,
             @RequestParam UUID adminId,
@@ -34,6 +37,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/delete")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public void delete(
             @RequestParam UUID id
     ){
@@ -41,6 +45,7 @@ public class CourseController {
     }
 
     @GetMapping("/get-user-courses")
+    @PreAuthorize(value = "hasRole('ADMIN') or hasRole('STUDENT') or hasRole('SUPER_ADMIN') " )
     public ResponseEntity<List<CourseEntity>> getAll(
             @RequestParam int size,
             @RequestParam int page,
@@ -50,6 +55,7 @@ public class CourseController {
     }
 
     @PatchMapping("/{courseId}/update")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<CourseEntity> updateCourse(
             @RequestBody CourseCreatedDto courseCreatedDto,
             @PathVariable UUID courseId) {
@@ -57,8 +63,8 @@ public class CourseController {
     }
 
     @GetMapping("/get-all")
-    public List<CourseEntity> getAllCourses() {
-        return courseService.getAllCourses();
+    public ResponseEntity<List<CourseEntity>> getAll() {
+        return ResponseEntity.ok( courseService.getAllCourses());
     }
 
 

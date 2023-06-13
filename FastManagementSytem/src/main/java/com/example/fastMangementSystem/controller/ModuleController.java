@@ -6,6 +6,7 @@ import com.example.fastMangementSystem.entity.module.ModuleEntity;
 import com.example.fastMangementSystem.service.module.ModuleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class ModuleController {
     private final ModuleService moduleService;
     @PostMapping("/add")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<ModuleEntity> add(
             @RequestBody ModuleCreateDto moduleCreateDto,
             @RequestParam UUID lessonId,
@@ -25,12 +27,14 @@ public class ModuleController {
     }
 
     @DeleteMapping("/delete")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public void delete(
             @RequestParam UUID id
     ){
         moduleService.delete(id);
     }
     @GetMapping("/get-all")
+    @PreAuthorize(value = "hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
     public ResponseEntity<List<ModuleEntity>> getAll(
             @RequestParam int size,
             @RequestParam int page,
@@ -39,6 +43,7 @@ public class ModuleController {
         return ResponseEntity.ok(moduleService.getUserModule(size, page, userId));
     }
     @PatchMapping("/{moduleId}/update")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public ResponseEntity<ModuleEntity> updateCourse(
             @RequestBody ModuleCreateDto moduleCreateDto,
             @PathVariable UUID moduleId) {

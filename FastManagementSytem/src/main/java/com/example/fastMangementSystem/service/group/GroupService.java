@@ -3,6 +3,7 @@ package com.example.fastMangementSystem.service.group;
 import com.example.fastMangementSystem.dto.groups.GroupsDto;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.groups.GroupEntity;
+import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import com.example.fastMangementSystem.entity.user.UserEntity;
 import com.example.fastMangementSystem.exception.DataNotFoundException;
 import com.example.fastMangementSystem.repository.course.CourseRepository;
@@ -11,8 +12,12 @@ import com.example.fastMangementSystem.repository.user.UserRepository;
 import com.example.fastMangementSystem.service.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,9 +57,12 @@ public class GroupService{
     }
 
     public GroupEntity getById(UUID id) {
-        GroupEntity groupEntity = groupsRepository.findById(id)
+        return groupsRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Groups not found"));
-        return groupEntity;
+    }
+
+    public List<GroupEntity> getAll() {
+        return groupsRepository.findAll();
     }
 
 
