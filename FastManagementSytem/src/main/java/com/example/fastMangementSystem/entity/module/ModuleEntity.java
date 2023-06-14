@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 public class ModuleEntity extends BaseEntity {
 
     private String moduleName;

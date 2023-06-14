@@ -20,7 +20,7 @@ public class OrderController {
     private final UserService userService;
 
     @PostMapping("/add")
-    @PreAuthorize(value = "hasRole('STUDENT')")
+    @PreAuthorize(value = "hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<OrderEntity> addOrder(
             @RequestParam UUID courseId,
             @RequestParam UUID studentId
@@ -29,14 +29,14 @@ public class OrderController {
     }
 
     @DeleteMapping("/delete")
-    @PreAuthorize(value = "hasRole('STUDENT')")
+    @PreAuthorize(value = "hasRole('ADMIN') or hasRole('STUDENT')")
     public void delete(
             @RequestParam UUID id
     ){
         orderService.delete(id);
     }
     @GetMapping("/get-user-orders")
-    @PreAuthorize(value = "hasRole('STUDENT')")
+    @PreAuthorize(value = "hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<List<OrderEntity>> getAll(
             @RequestParam int size,
             @RequestParam int page,
@@ -45,6 +45,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getUserOrders(size, page, userId));
     }
     @GetMapping("/get-all-orders")
+    @PreAuthorize(value = "hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<List<OrderEntity>> getAll(
     ) {
         return ResponseEntity.ok( orderService.getAll());

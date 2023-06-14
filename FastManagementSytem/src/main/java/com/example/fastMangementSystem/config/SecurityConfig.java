@@ -26,9 +26,7 @@ public class SecurityConfig {
     private final AuthService authService;
     private final AuthenticationService authenticationService;
     private final JwtService jwtService;
-
     private final PasswordEncoder passwordEncoder;
-
 
 
     @Bean
