@@ -1,11 +1,15 @@
 package com.example.fastMangementSystem.service.orderService;
 
+import com.example.fastMangementSystem.entity.card.CardEntity;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.groups.GroupEntity;
+import com.example.fastMangementSystem.entity.history.HistoryEntity;
 import com.example.fastMangementSystem.entity.order.OrderEntity;
 import com.example.fastMangementSystem.entity.user.UserEntity;
 import com.example.fastMangementSystem.exception.DataNotFoundException;
+import com.example.fastMangementSystem.repository.card.CardRepository;
 import com.example.fastMangementSystem.repository.course.CourseRepository;
+import com.example.fastMangementSystem.repository.history.HistoryRepository;
 import com.example.fastMangementSystem.repository.orderRepository.OrderRepository;
 import com.example.fastMangementSystem.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,6 +27,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private final CardRepository cardRepository;
+    private final HistoryRepository historyRepository;
 
     public OrderEntity add(UUID courseId, UUID studentId) {
         OrderEntity orderEntity = new OrderEntity();
@@ -63,4 +70,6 @@ public class OrderService {
     public List<OrderEntity> getAll() {
         return orderRepository.findAll();
     }
+
+
 }
