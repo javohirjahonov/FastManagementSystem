@@ -4,6 +4,7 @@ import com.example.fastMangementSystem.entity.BaseEntity;
 import com.example.fastMangementSystem.entity.card.CardEntity;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.groups.GroupEntity;
+import com.example.fastMangementSystem.entity.history.HistoryEntity;
 import com.example.fastMangementSystem.entity.order.OrderEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,20 +27,18 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(unique = true, nullable = false)
     private String phoneNumber;
     private String password;
-
     @Enumerated(EnumType.STRING)
     private List<UserRole> roles;
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<GroupEntity> mentorCourses;
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<CourseEntity> adminCourses;
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderEntity> studentOrders;
     @OneToMany(cascade = CascadeType.ALL)
     private List<CardEntity> cards;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<HistoryEntity> histories;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
