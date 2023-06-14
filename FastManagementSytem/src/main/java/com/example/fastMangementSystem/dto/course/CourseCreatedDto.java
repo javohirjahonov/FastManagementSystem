@@ -16,10 +16,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class CourseCreatedDto {
-    @NotEmpty(message = "not null")
+    @NotEmpty(message = "Course name not be null")
     private String name;
-    @NotEmpty(message = "not null")
+    @NotEmpty(message = "Course module not be null")
     private String module;
-
     private List<GroupEntity> groups;
 }
