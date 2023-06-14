@@ -12,5 +12,5 @@ import java.util.UUID;
 
 @Repository
 public interface ModuleRepository extends JpaRepository<ModuleEntity, UUID> {
-//    List<ModuleEntity> findModuleEntitiesByUserEntityId(Pageable pageable, UUID userId);
+    List<ModuleEntity> findModuleEntitiesBy(Pageable pageable, UUID userId);
 }

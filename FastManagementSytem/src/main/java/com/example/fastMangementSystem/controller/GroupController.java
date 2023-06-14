@@ -1,22 +1,16 @@
 package com.example.fastMangementSystem.controller;
 
-import com.example.fastMangementSystem.dto.LessonCreateDto;
 import com.example.fastMangementSystem.dto.groups.GroupsDto;
-import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.groups.GroupEntity;
-import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import com.example.fastMangementSystem.exception.RequestValidationException;
-import com.example.fastMangementSystem.repository.groups.GroupsRepository;
 import com.example.fastMangementSystem.service.group.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -56,7 +50,16 @@ public class GroupController {
             @PathVariable UUID groupId) {
         return ResponseEntity.ok(groupService.update(groupsDto,groupId));
     }
-    @GetMapping("/get-all")
+    @GetMapping("/get-user-groups")
+    @PreAuthorize(value = "hasRole('ADMIN') or hasRole('SUPER_ADMIN') " )
+    public ResponseEntity<List<GroupEntity>> getUserGroups(
+            @RequestParam int size,
+            @RequestParam int page,
+            @RequestParam UUID userId
+    ){
+        return ResponseEntity.ok(groupService.getUserGroups(size, page, userId));
+    }
+    @GetMapping("/get-all-groups")
     public ResponseEntity<List<GroupEntity>> getAll(
     ) {
         return ResponseEntity.ok( groupService.getAll());

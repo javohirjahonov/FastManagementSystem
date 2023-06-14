@@ -70,9 +70,11 @@ public class ModuleService  {
     }
 
     public List<ModuleEntity> getUserModule(int page, int size, UUID userId) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        return moduleRepository.findModuleEntitiesByUserEntityId(pageable, userId);
-        return null;
+        Pageable pageable = PageRequest.of(page, size);
+        return moduleRepository.findModuleEntitiesBy(pageable, userId);
+    }
+    public List<ModuleEntity> getAll() {
+        return moduleRepository.findAll();
     }
 
 }

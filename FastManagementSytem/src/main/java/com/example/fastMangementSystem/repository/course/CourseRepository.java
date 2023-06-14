@@ -9,8 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CourseRepository extends JpaRepository<CourseEntity, UUID> {
-    Optional<CourseEntity> getCourseEntityByCourseType(UUID id);
-
-
-//    List<CourseEntity> findCourseEntitiesByUserEntityId(Pageable pageable, UUID userId);
+    Optional<CourseEntity> getCourseEntityById(UUID id);
+    List<CourseEntity> findCourseEntitiesBy(Pageable pageable, UUID userId);
 }

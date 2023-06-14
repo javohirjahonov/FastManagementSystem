@@ -2,7 +2,6 @@ package com.example.fastMangementSystem.controller;
 
 import com.example.fastMangementSystem.dto.course.CourseCreatedDto;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
-import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import com.example.fastMangementSystem.exception.RequestValidationException;
 import com.example.fastMangementSystem.service.course.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -45,7 +43,7 @@ public class CourseController {
 
     @GetMapping("/get-user-courses")
     @PreAuthorize(value = "hasRole('ADMIN') or hasRole('STUDENT') or hasRole('SUPER_ADMIN') " )
-    public ResponseEntity<List<CourseEntity>> getAll(
+    public ResponseEntity<List<CourseEntity>> getUserCourses(
             @RequestParam int size,
             @RequestParam int page,
             @RequestParam UUID userId
@@ -61,7 +59,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.update(courseCreatedDto, courseId));
     }
 
-    @GetMapping("/get-all")
+    @GetMapping("/get-all-courses")
     public ResponseEntity<List<CourseEntity>> getAll() {
         return ResponseEntity.ok( courseService.getAllCourses());
     }
