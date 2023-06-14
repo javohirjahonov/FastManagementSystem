@@ -86,6 +86,18 @@ public class AuthController {
         return ResponseEntity.ok(userService.save(userDto, List.of(UserRole.OPERATOR)));
     }
 
+    @PostMapping("/student/sign-up")
+    public ResponseEntity<UserEntity> studentAdd(
+            @Valid @RequestBody UserCreateDto userDto,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            throw new RequestValidationException(allErrors);
+        }
+        return ResponseEntity.ok(userService.save(userDto, List.of(UserRole.STUDENT)));
+    }
+
 
 
 }
