@@ -5,6 +5,7 @@ import com.example.fastMangementSystem.service.UserService;
 import com.example.fastMangementSystem.service.orderService.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,12 +23,12 @@ public class OrderController {
     private final UserService userService;
 
     @PostMapping("/add")
+    @PreAuthorize(value = "hasRole('STUDENT')")
     public ResponseEntity<OrderEntity> addOrder(
             @RequestParam UUID courseId,
-            @RequestParam UUID studentId,
-            @RequestBody OrderEntity order
+            @RequestParam UUID studentId
     ) {
-        return ResponseEntity.ok(orderService.add(order, courseId, studentId));
+        return ResponseEntity.ok(orderService.add(courseId, studentId));
     }
 
 

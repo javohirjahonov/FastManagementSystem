@@ -23,7 +23,8 @@ public class OrderService {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
 
-    public OrderEntity add(OrderEntity orderEntity, UUID courseId, UUID studentId) {
+    public OrderEntity add(UUID courseId, UUID studentId) {
+        OrderEntity orderEntity = new OrderEntity();
 
         UserEntity student = userRepository.findById(studentId)
                 .orElseThrow(() -> new DataNotFoundException("Student not found"));
