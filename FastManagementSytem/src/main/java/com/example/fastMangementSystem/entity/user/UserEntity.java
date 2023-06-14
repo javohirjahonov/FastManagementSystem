@@ -3,8 +3,10 @@ package com.example.fastMangementSystem.entity.user;
 import com.example.fastMangementSystem.entity.BaseEntity;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.groups.GroupEntity;
+import com.example.fastMangementSystem.entity.order.OrderEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.core.Ordered;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,14 +29,14 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private List<UserRole> roles;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<CourseEntity> studentCourses;
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<GroupEntity> mentorCourses;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<CourseEntity> adminCourses;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderEntity> studentOrders;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

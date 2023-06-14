@@ -21,9 +21,6 @@ public class CourseEntity extends BaseEntity {
     private String module;
     private CourseType courseType;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<CourseEntity> courseUsers;
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<GroupEntity> groups;
 
