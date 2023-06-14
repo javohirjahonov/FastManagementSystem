@@ -1,6 +1,7 @@
 package com.example.fastMangementSystem.service.lesson;
 
 import com.example.fastMangementSystem.dto.LessonCreateDto;
+import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import com.example.fastMangementSystem.entity.lesson.LessonEntity;
 import com.example.fastMangementSystem.entity.module.ModuleEntity;
 import com.example.fastMangementSystem.exception.DataNotFoundException;
@@ -46,9 +47,11 @@ public class LessonService {
         return lessonRepository.save(lessonEntity);
     }
 
-    public List<LessonEntity> getAll(int size, int page, UUID userId) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        return lessonRepository.findLessonEntitiesByUserId(pageable, userId);
-        return null;
+    public List<LessonEntity> getUserLessons(int size, int page, UUID userId) {
+        Pageable pageable = PageRequest.of(page, size);
+        return lessonRepository.findLessonEntitiesBy(pageable, userId);
+    }
+    public List<LessonEntity> getAll() {
+        return lessonRepository.findAll();
     }
 }

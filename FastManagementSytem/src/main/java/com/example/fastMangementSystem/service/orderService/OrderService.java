@@ -9,6 +9,8 @@ import com.example.fastMangementSystem.repository.course.CourseRepository;
 import com.example.fastMangementSystem.repository.orderRepository.OrderRepository;
 import com.example.fastMangementSystem.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
@@ -53,5 +55,12 @@ public class OrderService {
     public OrderEntity getById(UUID id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("This order not found"));
+    }
+    public List<OrderEntity> getUserOrders(int page, int size, UUID userId) {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderRepository.findOrderEntitiesBy(pageable, userId);
+    }
+    public List<OrderEntity> getAll() {
+        return orderRepository.findAll();
     }
 }

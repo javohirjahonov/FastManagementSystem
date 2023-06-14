@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +26,6 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.add(lessonCreateDto));
     }
 
-
   @DeleteMapping("/delete")
   @PreAuthorize(value = "hasRole('ADMIN')")
   public void delete(
@@ -38,14 +36,14 @@ public class LessonController {
 
 
 
-  @GetMapping("/get-all")
+  @GetMapping("/get-user-lessons")
   @PreAuthorize(value = "hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
-  public ResponseEntity<List<LessonEntity>> getAll(
+  public ResponseEntity<List<LessonEntity>> getUserLessons(
           @RequestParam int size,
           @RequestParam int page,
           @RequestParam UUID userId
   ){
-    return ResponseEntity.ok(lessonService.getAll(size,page,userId));
+    return ResponseEntity.ok(lessonService.getUserLessons(size,page,userId));
   }
 
 
@@ -56,6 +54,10 @@ public class LessonController {
           @PathVariable UUID lessonId) {
     return ResponseEntity.ok(lessonService.update(lessonCreateDto,lessonId));
   }
-
+  @GetMapping("/get-all-lessons")
+  public ResponseEntity<List<LessonEntity>> getAll(
+  ) {
+    return ResponseEntity.ok( lessonService.getAll());
+  }
 
 }

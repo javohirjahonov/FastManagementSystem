@@ -7,11 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -31,5 +28,26 @@ public class OrderController {
         return ResponseEntity.ok(orderService.add(courseId, studentId));
     }
 
+    @DeleteMapping("/delete")
+    @PreAuthorize(value = "hasRole('STUDENT')")
+    public void delete(
+            @RequestParam UUID id
+    ){
+        orderService.delete(id);
+    }
+    @GetMapping("/get-user-orders")
+    @PreAuthorize(value = "hasRole('STUDENT')")
+    public ResponseEntity<List<OrderEntity>> getAll(
+            @RequestParam int size,
+            @RequestParam int page,
+            @RequestParam UUID userId
+    ){
+        return ResponseEntity.ok(orderService.getUserOrders(size, page, userId));
+    }
+    @GetMapping("/get-all-orders")
+    public ResponseEntity<List<OrderEntity>> getAll(
+    ) {
+        return ResponseEntity.ok( orderService.getAll());
+    }
 
 }

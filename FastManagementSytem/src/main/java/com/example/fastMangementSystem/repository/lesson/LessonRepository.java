@@ -8,6 +8,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface LessonRepository extends JpaRepository<LessonEntity, UUID> {
-
-//    List<LessonEntity> findLessonEntitiesByUserId(Pageable pageable, UUID userId);
+    List<LessonEntity> findLessonEntitiesBy(Pageable pageable, UUID userId);
 }

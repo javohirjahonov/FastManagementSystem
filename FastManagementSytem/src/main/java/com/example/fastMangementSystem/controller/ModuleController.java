@@ -35,7 +35,7 @@ public class ModuleController {
     ){
         moduleService.delete(id);
     }
-    @GetMapping("/get-all")
+    @GetMapping("/get-user-modules")
     @PreAuthorize(value = "hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
     public ResponseEntity<List<ModuleEntity>> getAll(
             @RequestParam int size,
@@ -50,5 +50,10 @@ public class ModuleController {
             @RequestBody ModuleCreateDto moduleCreateDto,
             @PathVariable UUID moduleId) {
         return ResponseEntity.ok(moduleService.update(moduleCreateDto, moduleId));
+    }
+    @GetMapping("/get-all-modules")
+    public ResponseEntity<List<ModuleEntity>> getAll(
+    ) {
+        return ResponseEntity.ok( moduleService.getAll());
     }
 }

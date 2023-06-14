@@ -59,6 +59,10 @@ public class GroupService{
         return groupsRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Groups not found"));
     }
+    public List<GroupEntity> getUserGroups(int page, int size, UUID userId) {
+        Pageable pageable = PageRequest.of(page, size);
+        return groupsRepository.findGroupEntitiesBy(pageable, userId);
+    }
 
     public List<GroupEntity> getAll() {
         return groupsRepository.findAll();

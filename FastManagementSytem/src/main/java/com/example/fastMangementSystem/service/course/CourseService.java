@@ -13,6 +13,8 @@ import com.example.fastMangementSystem.repository.module.ModuleRepository;
 import com.example.fastMangementSystem.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -82,15 +84,14 @@ public class CourseService {
     }
 
     public Optional<CourseEntity> getById(UUID id) {
-        CourseEntity contentEntity = courseRepository.getCourseEntityByCourseType(id).orElseThrow(()
+        CourseEntity contentEntity = courseRepository.getCourseEntityById(id).orElseThrow(()
                 -> new IllegalArgumentException("course couldn't be found"));
         return Optional.ofNullable(contentEntity);
     }
 
     public List<CourseEntity> getUserCourse(int page, int size, UUID userId) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        return courseRepository.findCourseEntitiesByUserEntityId(pageable, userId);
-        return null;
+        Pageable pageable = PageRequest.of(page, size);
+        return courseRepository.findCourseEntitiesBy(pageable, userId);
     }
 
     public List<CourseEntity> getAllCourses() {
