@@ -52,6 +52,7 @@ public class ModuleController {
         return ResponseEntity.ok(moduleService.update(moduleCreateDto, moduleId));
     }
     @GetMapping("/get-all-modules")
+    @PreAuthorize(value = "hasRole('ADMIN') or hasRole('MENTOR')")
     public ResponseEntity<List<ModuleEntity>> getAll(
     ) {
         return ResponseEntity.ok( moduleService.getAll());
