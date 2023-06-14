@@ -2,6 +2,8 @@ package com.example.fastMangementSystem.controller;
 
 import com.example.fastMangementSystem.entity.order.OrderEntity;
 import com.example.fastMangementSystem.service.UserService;
+import com.example.fastMangementSystem.service.card.CardService;
+import com.example.fastMangementSystem.service.history.HistoryService;
 import com.example.fastMangementSystem.service.orderService.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ public class OrderController {
 
     private final OrderService orderService;
     private final UserService userService;
+    private final HistoryService historyService;
+    private final CardService cardService;
 
     @PostMapping("/add")
     @PreAuthorize(value = "hasRole('ADMIN') or hasRole('STUDENT')")
@@ -50,5 +54,7 @@ public class OrderController {
     ) {
         return ResponseEntity.ok( orderService.getAll());
     }
+
+
 
 }
