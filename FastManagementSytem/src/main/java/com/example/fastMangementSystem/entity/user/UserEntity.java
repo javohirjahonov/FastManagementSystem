@@ -1,6 +1,7 @@
 package com.example.fastMangementSystem.entity.user;
 
 import com.example.fastMangementSystem.entity.BaseEntity;
+import com.example.fastMangementSystem.entity.card.CardEntity;
 import com.example.fastMangementSystem.entity.course.CourseEntity;
 import com.example.fastMangementSystem.entity.groups.GroupEntity;
 import com.example.fastMangementSystem.entity.order.OrderEntity;
@@ -37,6 +38,8 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderEntity> studentOrders;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CardEntity> cards;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
